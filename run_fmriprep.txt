@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Define your paths
+BIDS_DIR="/Volumes/T9/ds001486"
+OUTPUT_DIR="/Volumes/T9/ds001486/derivatives/fmriprep"
+WORK_DIR="/Volumes/T9/work"
+FS_LICENSE="/Volumes/T9/license.txt"
+
+# Create folders
+mkdir -p "$OUTPUT_DIR"
+mkdir -p "$WORK_DIR"
+
+# Participant list
+subs=(059 065 067 069 071 075 076 077 078 083 088 095 096 103 106 090 036 013 008 057 070 023 024 053 044 034 060 007 027 010)
+
+for sub in "${subs[@]}"; do
+    echo "========================================"
+    echo "Starting Subject: sub-$sub"
+    echo "========================================"
+
+    # Clean macOS hidden files
+    dot_clean -m "$BIDS_DIR"
+
+    # Run fMRIPrep
+    docker run -ti --rm \
+        --platform linux/amd64 \
+        -e "COPYFILE_DISABLE=1" \
+        -v "$BIDS_DIR":/data:ro \
+        -v "$OUTPUT_DIR":/out \
+        -v "$WORK_DIR":/work \
+        -v "$FS_LICENSE":/opt/freesurfer/license.txt:ro \
+        nipreps/fmriprep:latest \
+        /data /out \
+        participant \
+        --participant-label "$sub" \
+        --work-dir /work \
+        --low-mem \
+        --mem_mb 16000 \
+        --nprocs 8 \
+        --output-spaces MNI152NLin2009cAsym:res-2 \
+        --clean-workdir
+
+    echo "Finished Subject: sub-$sub"
+done
