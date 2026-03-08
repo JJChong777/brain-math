@@ -4,5 +4,6 @@ __pycache__
 data/
 preds/
 model/
-monai/runs
+deeplearn/runs
+deeplearn/GLM/runs
 *.pth
