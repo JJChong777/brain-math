@@ -41,6 +41,6 @@ def get_sub_data():
     return X_avg_s, y_avg_s
 
 def get_labels():
-    atlas = datasets.fetch_atlas_schaefer_2018(n_rois=400, yeo_networks=7)
+    atlas = datasets.fetch_atlas_schaefer_2018(n_rois=100, yeo_networks=7)
     labels = atlas.labels
     return labels
