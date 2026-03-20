@@ -7,3 +7,4 @@ model/
 deeplearn/runs
 deeplearn/GLM/runs
 *.pth
+archive/matrix/
