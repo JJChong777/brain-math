@@ -13,6 +13,11 @@ select_participants.ipynb is run on the meta data file in the dataset to find th
 
 The entire docker command under `run_fmriprep.txt` is used to run the fmriPrep container to preprocess the data for the selected participants. You will probably need to download [Docker Desktop](https://www.docker.com/products/docker-desktop/), although I used [OrbStack](https://orbstack.dev/download) becuase it seems to have better performance on Apple Silicon.
 
+You will need to pull the relevant fmriprep container before you can run the preprocessing docker command. The container is found on the docker repository [here](https://hub.docker.com/r/nipreps/fmriprep). You can also just run the command 
+```
+docker pull nipreps/fmriprep
+```
+
 `feature_extract.ipynb` is where the 1D correlation matrix of the neuroimaging data is extracted based on the Schaefer 100 Atlas
 
 `final_clean_test.ipynb` is where the Support Vector Machine, Multi Layer Perceptron and XGBoost machine learning is run. The evaluation metrics and the top 10 network connections are found
